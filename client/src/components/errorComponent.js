@@ -1,4 +1,6 @@
+import React, { Component } from 'react';
 import '../index.css';
+import {Link} from 'react-router';
 
 const errorNotFound = () => {
   return (

@@ -1,6 +1,8 @@
 import '../index.css';
+import React, { Component } from 'react';
 
-const event= () => {
+const EventView = (props) => {
+  console.log("props",props);
   return (
     <div>
       <div>
@@ -13,4 +15,4 @@ const event= () => {
   );
 }
 
-export default event;
+export default EventView;

@@ -1,18 +1,24 @@
 import React, { Component } from 'react';
 import '../index.css';
-import {Link} from 'react-router';
+import EventView from './event.js';
+
 
 class EventsContainer extends Component {
+
   displayEvents() {
-    this.props.events.map(event => {
-      //render events
+    console.log("event component ==>", Event);
+    console.log("events", this.props.events);
+
+    return this.props.events.map(event => {
+     return <EventView title={event.title} location={event.location} date={event.date} description={event.description} restaurant={event.restaurant} />;
     });
   }
+
   render() {
     return (
       <div>
         <ul>
-          {displayEvents()}
+          {this.displayEvents()}
         </ul>
       </div>
     );
