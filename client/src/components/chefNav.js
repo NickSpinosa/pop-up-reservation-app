@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import '../index.css';
 import {Link} from 'react-router';
 import EventsContainer from './eventsContainer.js'
+import NewEventForm from "./registerEvent.js"
 
 const dummyData = [
   { title: "a night in paris",
@@ -28,7 +29,8 @@ class ChefNav extends Component {
    constructor(props) {
     super(props);
     this.state = {
-      displayMyEvents: false
+      displayMyEvents: true,
+      displayNewEventForm: false
     }
   }
 
@@ -37,20 +39,25 @@ class ChefNav extends Component {
     if(this.state.displayMyEvents){
       return <EventsContainer events={dummyData} />;
     }
+
+    if(this.state.displayNewEventForm){
+      return <NewEventForm />
+    }
+
   }
 
   toggleMyEvents() {
     console.log("State ==>", this.state);
     this.setState({
       displayMyEvents: true,
-      displayAllEvents: false
+      displayNewEventForm: false
     });
   }
 
-  toggleAllEvents(){
+  toggleNewEventForm(){
     this.setState({
       displayMyEvents: false,
-      displayAllEvents: true
+      displayNewEventForm: true
     });
   }
 
@@ -59,8 +66,8 @@ class ChefNav extends Component {
       <div>
         <div className='navigation'>
           <ul>
-            <li className="create"><Link onClick={this.toggleMyEvents.bind(this)} className='index'>My Events</Link></li>
-            <li><Link to={"/chef/create-event"} className='create'>Register New Event</Link></li>
+            <li className="create"><Link to={"/chef"}onClick={this.toggleMyEvents.bind(this)} className='index'>My Events</Link></li>
+            <li><Link to={"/chef"} onClick={this.toggleNewEventForm.bind(this)} className='create'>Register New Event</Link></li>
             <li><Link to={"/user"} className='logout'>User</Link></li>
           </ul>
         </div>

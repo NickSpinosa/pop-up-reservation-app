@@ -59,7 +59,7 @@ class UserNav extends Component {
       <div>
         <div className='navigation'>
           <ul>
-            <li className="create"><Link onClick={this.toggleMyEvents.bind(this)} className='index'>My Events</Link></li>
+            <li className="create"><Link to={"/user"} onClick={this.toggleMyEvents.bind(this)} className='index'>My Events</Link></li>
             <li><Link to={"/user/find-events"} className='create'>Find Events</Link></li>
             <li><Link to={"/chef"} className='logout'>Chef</Link></li>
           </ul>
