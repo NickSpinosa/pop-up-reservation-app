@@ -25,17 +25,46 @@ const dummyData = [
 ];
 
 class UserNav extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      displayMyEvents: false
+    }
+  }
+
+  loadEvents() {
+    console.log("load events");
+    if(this.state.displayMyEvents){
+      return <EventsContainer events={dummyData} />;
+    }
+  }
+
+  toggleMyEvents() {
+    console.log("State ==>", this.state);
+    this.setState({
+      displayMyEvents: true,
+      displayAllEvents: false
+    });
+  }
+
+  toggleAllEvents(){
+    this.setState({
+      displayMyEvents: false,
+      displayAllEvents: true
+    });
+  }
+
   render() {
     return (
       <div>
         <div className='navigation'>
           <ul>
-            <li className="create"><Link to={"/user/my-events"} className='index'>My Events</Link></li>
+            <li className="create"><Link onClick={this.toggleMyEvents.bind(this)} className='index'>My Events</Link></li>
             <li><Link to={"/user/find-events"} className='create'>Find Events</Link></li>
             <li><Link to={"/chef"} className='logout'>Chef</Link></li>
           </ul>
         </div>
-        <EventsContainer events={dummyData} />
+        {this.loadEvents()}
       </div>
     
     );
