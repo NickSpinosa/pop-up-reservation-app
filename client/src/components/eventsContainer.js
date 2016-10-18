@@ -6,7 +6,7 @@ import EventView from './event.js';
 class EventsContainer extends Component {
 
   displayEvents() {
-    console.log("event component ==>", Event);
+    console.log("event component ==>", EventView);
     console.log("events", this.props.events);
 
     return this.props.events.map(event => {

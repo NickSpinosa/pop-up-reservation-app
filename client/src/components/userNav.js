@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import '../index.css';
 import {Link} from 'react-router';
 import EventsContainer from "./eventsContainer.js";
+import axios from 'axios';
 
 const dummyData = [
   { title: "a night in paris",
@@ -28,14 +29,20 @@ class UserNav extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      displayMyEvents: false
+      displayMyEvents: true
     }
   }
 
   loadEvents() {
     console.log("load events");
     if(this.state.displayMyEvents){
-      return <EventsContainer events={dummyData} />;
+
+     axios.get("/events")
+        .then(function(response){
+          console.log("response from server ==>",(response.data));
+          return <EventsContainer events={response.data} />;
+        });
+      
     }
   }
 

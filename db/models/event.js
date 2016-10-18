@@ -1,5 +1,5 @@
 let db = require('../config.js');
-const Restaurant = requite('./restaurant.js');
+const Restaurant = require('./restaurant.js');
 
 const Event = db.Model.extend({
   tableName: 'events',
