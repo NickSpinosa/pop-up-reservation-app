@@ -3,62 +3,43 @@ import '../index.css';
 import {Link} from 'react-router';
 import EventsContainer from './eventsContainer.js'
 import NewEventForm from "./registerEvent.js"
-
-const dummyData = [
-  { title: "a night in paris",
-    location: "bushwick brooklyn",
-    date: "dec 10, 2016",
-    description: "classic parisian fare",
-    restaurant: "Grain and Ashe"
-  },
-  { title: "Feast of the Gaucho",
-    location: "east harlem NY",
-    date: "dec 18, 2016",
-    description: "traditional Argentine barbeque",
-    restaurant: "La Familia Argentina"
-  },
-  { title: "noodle",
-    location: "williamsburg brooklyn",
-    date: "Dec 4, 2016",
-    description:"shanghainese dumplings reimagined with a mediteranean flare" ,
-    restaurant: "Pasta and Vino"
-  }
-];
+import axios from 'axios';
 
 class ChefNav extends Component {
    constructor(props) {
     super(props);
     this.state = {
-      displayMyEvents: true,
-      displayNewEventForm: false
+     events: []
     }
-  }
-
-  loadEvents() {
-    console.log("load events");
-    if(this.state.displayMyEvents){
-      return <EventsContainer events={dummyData} />;
-    }
-
-    if(this.state.displayNewEventForm){
-      return <NewEventForm />
-    }
-
-  }
-
-  toggleMyEvents() {
-    console.log("State ==>", this.state);
-    this.setState({
-      displayMyEvents: true,
-      displayNewEventForm: false
-    });
+    this. loadAllEvents();
   }
 
   toggleNewEventForm(){
     this.setState({
-      displayMyEvents: false,
-      displayNewEventForm: true
+      events: []
     });
+  }
+
+  renderChild() {
+    if(this.state.events.length !== 0){
+      return <EventsContainer events={this.state.events} />;
+    } else {
+      return <NewEventForm />;
+    }
+  }
+
+  loadAllEvents() {
+    console.log("load events");
+    let component = this;
+
+    console.log("component", component);
+
+    axios.get("events")
+    .then(function(response){
+      console.log("response from server ==>",(response.data));
+      component.setState({events: response.data});
+    })
+    .catch(console.log); 
   }
 
   render() {
@@ -66,12 +47,12 @@ class ChefNav extends Component {
       <div>
         <div className='navigation'>
           <ul>
-            <li className="create"><Link to={"/chef"}onClick={this.toggleMyEvents.bind(this)} className='index'>My Events</Link></li>
+            <li className="create"><Link to={"/chef"}onClick={this.loadAllEvents.bind(this)} className='index'>My Events</Link></li>
             <li><Link to={"/chef"} onClick={this.toggleNewEventForm.bind(this)} className='create'>Register New Event</Link></li>
             <li><Link to={"/user"} className='logout'>User</Link></li>
           </ul>
         </div>
-        {this.loadEvents()}
+        {this.renderChild()}
       </div>
     );
   }
