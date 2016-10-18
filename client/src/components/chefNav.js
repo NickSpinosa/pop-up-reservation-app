@@ -34,7 +34,7 @@ class ChefNav extends Component {
 
     console.log("component", component);
 
-    axios.get("events")
+    axios.get("/chef-events")
     .then(function(response){
       console.log("response from server ==>",(response.data));
       component.setState({events: response.data});

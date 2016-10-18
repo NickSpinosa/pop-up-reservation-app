@@ -23,6 +23,7 @@ const createUserSession = function (request, response, newUser){
 const createChefSession = function (request, response, newChef){
   return request.session.regenerate(function() {
     request.session.chef = newChef;
+    console.log("created session", request.session);
     response.redirect("/");
   });
 }
@@ -138,7 +139,7 @@ module.exports = function (app, express){
               restaurant.comparePassword(data.password, (match)=> {
                 if (match){
                   console.log("chef logged in");
-                  createUserSession(request, response, restaurant);
+                  createChefSession(request, response, restaurant);
                 } else {
                   console.log("wrong password");
                   response.send("wrong password");
@@ -160,9 +161,45 @@ module.exports = function (app, express){
       });
   });
 
+  //returns chef events
+  app.get("/chef-events", function(request, response){
+    Events.fetch()
+      .then(function(events){
+        response.status(200).send(events.where({'restaurant_id': request.session.chef.id}));
+      });
+  });
+
+  //returns user events
+  app.get("/user-events", function(request, response){
+    Events_Users.fetch()
+      .then(function(events_users){
+        response.status(200).send(events_users.where({'usert_id': request.session.user.id}));
+      });
+  });
+
+  //registers a user to an event
+  app.post("/user-events", function(request, response){
+    let data = "";
+
+    request.on("data", chunk => data+= chunk)
+      .on("end", () => { 
+        data = JSON.parse(data);
+
+        Events_Users.create({
+          user_id: data.userId,
+          event_id: data.eventId
+        })
+        .then((newRegistedEvent) => {
+          console.log("registered new event", newRegistedEvent);
+          response.status(200).send(newRegistedEvent);
+        });
+      });
+  });
+
   //creates an event
   app.post("/events", function(request, response){
-    console.log("request body", request.body);
+
+    console.log("session", request.session);
 
     let data = "";
 
@@ -178,7 +215,8 @@ module.exports = function (app, express){
         description: data.description,
         location: data.location,
         date: data.date,
-        //restaurant_id = 1
+        restaurant_id: request.session.chef.id
+
       }).then(function(newEvent){
         console.log("created ==>", newEvent);
         response.status(200).send(newEvent);
@@ -186,35 +224,7 @@ module.exports = function (app, express){
 
     });
 
-    
-
   });
-
-  //returns events owned by a restaurant
-  // app.get("/restaurant-events", function(request,response){
-  //   Events.fetch().where({restaurant_id = 1})
-  //     .then(function(events){
-  //       response.status(200).send(events);
-  //     });
-  // });
-
-  //returns events a user is registered to
-  app.get("/myevents", function(request,response){
-
-  })
-
-  //registers a user to an event
-  // app.post("/myevents", function(request, reponse){
-
-  //   Events_Users.create({
-  //     user_id = request.body.userId,
-  //     event_id = request.body.eventId
-  //   }).then(function(newEventUser){
-  //     console.log("created new user event map ==>", newEventUser);
-  //     response.status(200).send(newEventUser);
-  //   });
-
-  // });
 
 
   //wildcard route enables client side routing

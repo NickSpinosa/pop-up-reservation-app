@@ -14,14 +14,11 @@ class UserNav extends Component {
   }
 
   loadAllEvents() {
-    console.log("load events");
     let component = this;
-
-    console.log("component", component);
 
     axios.get("events")
     .then(function(response){
-      console.log("response from server ==>",(response.data));
+      console.log("response from server ==>",response.data);
       component.setState({events: response.data});
     })
     .catch(console.log); 
@@ -34,14 +31,25 @@ class UserNav extends Component {
     }
   }
 
+  loadMyEvents() {
+    let component = this;
+
+    axios.get("/user-events")
+    .then(function(response){
+      console.log("response from server ==>",response.data);
+      component.setState({events: response.data});
+    })
+    .catch(console.log); 
+  }
+
   render() {
     return (
       <div>
         <div className='navigation'>
           <ul>
-            <li className="create"><Link to={"/user"} onClick={this.loadAllEvents.bind(this)} className='index'>My Events</Link></li>
-            <li><Link to={"/user/find-events"} className='create'>Find Events</Link></li>
-            <li><Link to={"/chef"} className='logout'>Chef</Link></li>
+            <li><Link to={"/user"}  className='index'>My Events</Link></li>
+            <li><Link to={"/user/find-events"} onClick={this.loadAllEvents.bind(this)} >Find Events</Link></li>
+            <li><Link to={"/chef"} >Chef</Link></li>
           </ul>
         </div>
         {this.renderEvents()}

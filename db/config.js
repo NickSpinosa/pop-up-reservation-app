@@ -42,6 +42,7 @@ db.knex.schema.hasTable('events').then(function(exists) {
       user.string('description', 400);
       user.string('location', 50);
       user.string('date', 20);
+      user.integer("restaurant_id");
     }).then(function (table) {
       console.log('Created Table', table);
     });
@@ -52,6 +53,8 @@ db.knex.schema.hasTable('events_users').then(function(exists) {
   if (!exists) {
     db.knex.schema.createTable('events_users', function (user) {
       user.increments('id').primary();
+      user.integer("user_id");
+      user.integer("event_id");
     }).then(function (table) {
       console.log('Created Table', table);
     });
