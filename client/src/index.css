@@ -2,12 +2,15 @@ body {
   margin: 0;
   padding: 0;
   font-family: sans-serif;
+  background-color: teal;
 }
 
 .navigation {
+  font-family: 'Lobster', sans-serif;
+  font-size: 1.25em;
   width: 100%;
   height: 40px;
-  background-color: #eee;
+  background-color: #aaa;
 }
 
 .navigation ul {
@@ -28,4 +31,52 @@ body {
   padding: 10px;
   display: block;
   text-align: center;
+}
+
+.event {
+  float: left;
+  border-radius: 15px;
+  background-color: #aaa;
+  width:275px;
+  margin:8px;
+}
+.event div{
+  padding: 1px;
+  margin: 10px;
+}
+.event p {
+  font-family: 'Lobster', sans-serif;
+  color: crimson;
+  padding: 1px;
+  margin: 10px;
+}
+.event h4 {
+  margin: 10px;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+}
+
+.event-form {
+  border-radius: 10px;
+  margin: 10px;
+  background-color: #aaa;
+  width: 400px;
+}
+.event-form input {
+  margin: 5px;
+  width: 385px;
+}
+.event-form label {
+  font-family: 'Lobster', sans-serif;
+  color: crimson;
+  margin: 5px;
+}
+.event-form textarea{
+  margin: 5px;
+  width:370px;
+  padding: 5px 8px;
+  line-height: 125%;
+}
+.event-form button {
+  margin: 5px;
 }

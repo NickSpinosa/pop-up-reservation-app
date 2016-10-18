@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 const EventView = (props) => {
   console.log("props",props);
   return (
-    <div>
+    <div className="event">
       <div>
         <h2>{props.title}</h2>
         <h3>{props.location + " " + props.date}</h3>

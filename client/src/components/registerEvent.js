@@ -44,7 +44,7 @@ class NewEventForm extends Component {
 
   render(){
     return (
-      <div>
+      <div className='event-form'>
         <form  onSubmit={this.postEvent.bind(this)}>
           <label>Title</label>
           <input id="title" type="text" ref="text" placeholder='Title' onChange={this.changeTitle.bind(this)}  />
@@ -56,7 +56,7 @@ class NewEventForm extends Component {
           <input id="location" type="text" ref="text" placeholder='Location' onChange={this.changeLocation.bind(this)} />
 
           <label>Description</label>
-          <textarea id="description" rows="4"ref="text" placeholder='Description' onChange={this.changeDescription.bind(this)}></textarea>
+          <textarea id="description" rows="4" ref="text" col="8" placeholder='Description' onChange={this.changeDescription.bind(this)}></textarea>
 
           <button>Submit</button>
         </form>

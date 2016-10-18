@@ -39,7 +39,7 @@ module.exports = function (app, express){
         name: data.name,
         description: data.description,
         location: data.location,
-        date: data.description,
+        date: data.date,
         //restaurant_id = 1
       }).then(function(newEvent){
         console.log("created ==>", newEvent);

@@ -48,7 +48,7 @@ class ChefNav extends Component {
         <div className='navigation'>
           <ul>
             <li className="create"><Link to={"/chef"}onClick={this.loadAllEvents.bind(this)} className='index'>My Events</Link></li>
-            <li><Link to={"/chef"} onClick={this.toggleNewEventForm.bind(this)} className='create'>Register New Event</Link></li>
+            <li><Link to={"/chef"} onClick={this.toggleNewEventForm.bind(this)} className='create'>New Event</Link></li>
             <li><Link to={"/user"} className='logout'>User</Link></li>
           </ul>
         </div>
