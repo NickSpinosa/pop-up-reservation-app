@@ -45,7 +45,8 @@ module.exports = function (app, express){
           .fetch()
           .then(found => {
             if(found){
-              response.send("exists");
+              response.send("that name already exists");
+              console.log("user already exists")
             } else {
               const newUser = new User({
                 username: data.username,
@@ -103,7 +104,7 @@ module.exports = function (app, express){
           .fetch()
           .then(found => {
             if(found){
-              response.send("exists");
+              response.send("that name already exists");
 
             } else {
               const newRestaurant = new Restaurant({
@@ -145,7 +146,7 @@ module.exports = function (app, express){
               });
             } else {
               response.send("restaurant not found");
-              console.log("restaurantusername not found");
+              console.log("restaurant name not found");
             }
           });
       });

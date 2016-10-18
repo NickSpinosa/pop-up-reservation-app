@@ -22,8 +22,10 @@ class ChefLogin extends Component {
     .then(function(response){
       console.log("response", response);
 
-      if(response.status === 200){
+      if(response.data !== "wrong password" || response.fata !== "restaurant name not found" && response.data !== "that name already exits"){
         browserHistory.push("/chef");
+      } else {
+        alert(response.data);
       }
     })
   }

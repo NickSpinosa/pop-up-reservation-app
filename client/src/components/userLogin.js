@@ -20,8 +20,10 @@ class UserLogin extends Component{
     })
     .then(function(response){
       console.log("signup response",response);
-      if(response.status === 200){
+      if(response.data !== "wrong password" && response.data !== "username not found" && response.data !== "that name already exits"){
         browserHistory.push("/user");
+      } else {
+        alert(response.data);
       }
     })
   }
