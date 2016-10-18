@@ -4,65 +4,13 @@ import {Link} from 'react-router';
 import EventsContainer from "./eventsContainer.js";
 import axios from 'axios';
 
-const dummyData = [
-  {
-    name: "Feast of The Gaucho",
-    location: "williamsburg",
-    date: "december 10, 2016", 
-    description: "traditional argentine barbeque",
-    restaurant: "Manteca Grill"
-  },
-  {
-    name: "Feast of The Gaucho",
-    location: "williamsburg",
-    date: "december 10, 2016", 
-    description: "traditional argentine barbeque",
-    restaurant: "Manteca Grill"
-  },
-  {
-    name: "Feast of The Gaucho",
-    location: "williamsburg",
-    date: "december 10, 2016", 
-    description: "traditional argentine barbeque",
-    restaurant: "Manteca Grill"
-  },
-  {
-    name: "Feast of The Gaucho",
-    location: "williamsburg",
-    date: "december 10, 2016", 
-    description: "traditional argentine barbeque",
-    restaurant: "Manteca Grill"
-  },
-  {
-    name: "Feast of The Gaucho",
-    location: "williamsburg",
-    date: "december 10, 2016", 
-    description: "traditional argentine barbeque",
-    restaurant: "Manteca Grill"
-  },
-  {
-    name: "Feast of The Gaucho",
-    location: "williamsburg",
-    date: "december 10, 2016", 
-    description: "traditional argentine barbeque",
-    restaurant: "Manteca Grill"
-  },
-  {
-    name: "Feast of The Gaucho",
-    location: "williamsburg",
-    date: "december 10, 2016", 
-    description: "traditional argentine barbeque",
-    restaurant: "Manteca Grill"
-  },
-];
-
 class UserNav extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      events:dummyData
+      events:[]
     }
-    //this.loadAllEvents();
+    this.loadAllEvents();
   }
 
   loadAllEvents() {
