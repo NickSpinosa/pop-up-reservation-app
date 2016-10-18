@@ -6,6 +6,7 @@ const knex = require('knex')({
   },
   useNullAsDefault: true
 });
+
 let db = require('bookshelf')(knex);
 
 db.knex.schema.hasTable('restaurants').then(function(exists) {
@@ -35,9 +36,9 @@ db.knex.schema.hasTable('users').then(function(exists) {
 
 db.knex.schema.hasTable('events').then(function(exists) {
   if (!exists) {
-    db.knex.schema.createTable('users', function (user) {
+    db.knex.schema.createTable('events', function (user) {
       user.increments('id').primary();
-      user.string('name', 100).unique();
+      user.string('name', 100);
       user.string('description', 400);
       user.string('location', 50);
       user.string('date', 20);

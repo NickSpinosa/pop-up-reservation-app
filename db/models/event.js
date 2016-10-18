@@ -8,3 +8,5 @@ const Event = db.Model.extend({
     return this.belongsTo(Restaurant);
   }
 });
+
+module.exports = Event;
