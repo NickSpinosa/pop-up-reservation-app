@@ -62,6 +62,9 @@ body {
   background-color: #aaa;
   width: 400px;
 }
+.event-form h3 {
+  margin: 5px;
+}
 .event-form input {
   margin: 5px;
   width: 385px;
@@ -80,3 +83,11 @@ body {
 .event-form button {
   margin: 5px;
 }
+.margin {
+  margin: 10px;
+  margin-bottom: 10px;
+}
+.check-box {
+  
+}
+

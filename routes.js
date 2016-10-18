@@ -12,7 +12,144 @@ const Events = require('./db/collections/events.js');
 const Restaurants = require('./db/collections/restaurants.js');
 const Events_Users = require('./db/collections/events_users.js');
 
+
+const createUserSession = function (request, response, newUser){
+  return request.session.regenerate(function() {
+    request.session.user = newUser;
+    response.redirect("/");
+  });
+};
+
+const createChefSession = function (request, response, newChef){
+  return request.session.regenerate(function() {
+    request.session.chef = newChef;
+    response.redirect("/");
+  });
+}
+
+const loggedIn = function(req) {
+  return req.session ? req.session.user || req.session.chef : false;
+}
+
 module.exports = function (app, express){
+
+  //creates a user
+  app.post("/user-signup", function(request, response){
+    let data = "";
+
+    request.on("data", chunk => data+= chunk)
+      .on("end", function() {
+        data = JSON.parse(data);
+
+        new User({ username: data.username })
+          .fetch()
+          .then(found => {
+            if(found){
+              response.send("exists");
+            } else {
+              const newUser = new User({
+                username: data.username,
+                password: data.password
+              });
+
+              newUser.save()
+                .then(function(newUser){
+                  console.log("user saved", newUser);
+                  createUserSession(request, response, newUser);
+                });
+            }
+          });
+      })
+  });
+
+  //signs in a user
+  app.post("/user-signin", function(request, response){
+    let data = "";
+    
+    request.on("data", chunk => data+= chunk)
+      .on("end", () => {
+        data = JSON.parse(data);
+
+        new User({username: data.username})
+          .fetch()
+          .then((user)=>{
+            if(user){
+              user.comparePassword(data.password, (match)=> {
+                if (match){
+                  console.log("user logged in");
+                  createUserSession(request, response, user);
+                } else {
+                  console.log("wrong password");
+                  response.send("wrong password");
+                }
+              });
+            } else {
+              response.send("username not found");
+              console.log("username not found");
+            }
+          });
+      });
+  });
+
+  //creates a restaurant
+  app.post("/chef-signup", function(request, response){
+    let data = "";
+
+    request.on("data", chunk => data+= chunk)
+      .on("end", function() {
+        data = JSON.parse(data);
+
+        new Restaurant({ name: data.name })
+          .fetch()
+          .then(found => {
+            if(found){
+              response.send("exists");
+
+            } else {
+              const newRestaurant = new Restaurant({
+                name: data.name,
+                username: data.username,
+                password: data.password
+              });
+
+              newRestaurant.save()
+                .then(function(newRestaurant){
+                  console.log("Restaurant saved", newRestaurant);
+                  createChefSession(request, response, newRestaurant);
+                });
+            }
+          });
+      })
+  });
+
+  //signs in a restaurant
+  app.post("/chef-signin", function(request, response){
+    let data = "";
+    
+    request.on("data", chunk => data+= chunk)
+      .on("end", () => {
+        data = JSON.parse(data);
+
+        new Restaurant({name: data.name})
+          .fetch()
+          .then((restaurant)=>{
+            if(restaurant){
+              restaurant.comparePassword(data.password, (match)=> {
+                if (match){
+                  console.log("chef logged in");
+                  createUserSession(request, response, restaurant);
+                } else {
+                  console.log("wrong password");
+                  response.send("wrong password");
+                }
+              });
+            } else {
+              response.send("restaurant not found");
+              console.log("restaurantusername not found");
+            }
+          });
+      });
+  });
 
   //returns all events
   app.get("/events", function(request, response){

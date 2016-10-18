@@ -16,7 +16,7 @@ const Restaurant = db.Model.extend({
   },
   
   hashPassword: function() {
-    const cipher = Promise.promiseify(bcrypt.hash);
+    const cipher = Promise.promisify(bcrypt.hash);
     return cipher(this.get('password'), null, null).bind(this)
       .then(function(hash){
         this.set('password', hash);
