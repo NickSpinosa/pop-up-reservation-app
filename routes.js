@@ -171,9 +171,19 @@ module.exports = function (app, express){
 
   //returns user events
   app.get("/user-events", function(request, response){
+
     Events_Users.fetch()
       .then(function(events_users){
-        response.status(200).send(events_users.where({'usert_id': request.session.user.id}));
+        let eventIds = events_users.where({'user_id': request.session.user.id});
+        
+        let events = eventIds.map((eventId) => {
+          return Events.where({"id": eventId.attributes.id})[0].attributes;
+        });
+
+        console.log("user events", events);
+
+        response.status(200).send(events);
+
       });
   });
 
@@ -183,11 +193,11 @@ module.exports = function (app, express){
 
     request.on("data", chunk => data+= chunk)
       .on("end", () => { 
-        data = JSON.parse(data);
+        console.log("data", data);
 
         Events_Users.create({
-          user_id: data.userId,
-          event_id: data.eventId
+          user_id: request.session.user.id,
+          event_id: data
         })
         .then((newRegistedEvent) => {
           console.log("registered new event", newRegistedEvent);
